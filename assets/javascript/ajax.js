@@ -28,27 +28,53 @@
     var guardQueryURL = "https://content.guardianapis.com/search?q=obama&show-fields=all&api-key=ee30fe53-cc69-4403-802d-998ba44e8fa7";
     console.log(guardQueryURL);
 
+    var guardCount = 0;
+
     $.ajax({
         url: guardQueryURL,
         method: 'GET'
     }).then(function (input) {
 
+        function displayArticles() {
+        
         var guardResults = input.response.results;
         console.log(guardResults);
 
-        var guardHeadline = guardResults[0].webTitle;
-        console.log(guardHeadline);
-        $("#headline2").text(guardHeadline);
+        var articleText = $("<div>").attr("class", "articleSection");
+        
+        var guardHeadline = guardResults[guardCount].webTitle;
 
-        var guardWordcount = guardResults[0].fields.wordcount;
+        console.log(guardHeadline);
+
+        var guardHeadlineText = $("<p>").text(guardResults[guardCount].webTitle);
+        
+        var guardWordcount = guardResults[guardCount].fields.wordcount;
+        
         console.log(guardWordcount);
 
         var guardReadTime = Math.round(guardWordcount/275);
         console.log (guardReadTime);
-        $("#readTime2").text("Estimated read time: " + guardReadTime + " min");
 
-        var guardPic = guardResults[0].fields.thumbnail
-        $("#img2").html("<img src='https://media.guim.co.uk/8c7e29d7e1749e03bff6743e506e4189f1d056c4/0_384_5760_3456/500.jpg'>");   
+        var guardReadTimeText = 
+        $("<p>").text("Estimated read time: " + guardReadTime + " min");
+
+        articleText.append(guardHeadlineText, guardReadTimeText);
+
+        $("#guardian").append(articleText);
+
+        guardCount++;
+
+        if (guardCount < 3) {
+            displayArticles();
+        }
+
+        }
+
+        displayArticles();
+        console.log(guardCount);
+
+        });
 
 
-    });
+        // var guardPic = guardResults[0].fields.thumbnail
+        // $("#img2").html("<img src='https://media.guim.co.uk/8c7e29d7e1749e03bff6743e506e4189f1d056c4/0_384_5760_3456/500.jpg'>"); 
