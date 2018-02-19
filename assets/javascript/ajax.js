@@ -25,10 +25,11 @@
     });
 
 
-    var guardQueryURL = "https://content.guardianapis.com/search?q=obama&show-fields=all&api-key=ee30fe53-cc69-4403-802d-998ba44e8fa7";
+    var guardQueryURL = "https://content.guardianapis.com/search?q=obama&show-fields=all&page-size=50&api-key=ee30fe53-cc69-4403-802d-998ba44e8fa7";
     console.log(guardQueryURL);
 
     var guardCount = 0;
+    var guardTotalReadTime = 0;
 
     $.ajax({
         url: guardQueryURL,
@@ -52,8 +53,10 @@
         
         console.log(guardWordcount);
 
-        var guardReadTime = Math.round(guardWordcount/275);
+        var guardReadTime = Math.round(guardWordcount/250);
         console.log (guardReadTime);
+
+        guardTotalReadTime += guardReadTime;
 
         var guardReadTimeText = 
         $("<p>").text("Estimated read time: " + guardReadTime + " min");
@@ -64,7 +67,7 @@
 
         guardCount++;
 
-        if (guardCount < 3) {
+        if (guardTotalReadTime < 25) {
             displayArticles();
         }
 
@@ -72,6 +75,7 @@
 
         displayArticles();
         console.log(guardCount);
+        console.log(guardTotalReadTime);
 
         });
 
