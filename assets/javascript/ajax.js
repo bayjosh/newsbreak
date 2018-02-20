@@ -1,34 +1,71 @@
     
-    var nytQueryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=465a473b34ef4dd4a0ee8c44278471a2&q=Obama";
-    console.log(nytQueryURL);
+    //
+    
+    var nytQueryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=465a473b34ef4dd4a0ee8c44278471a2&q=obama";
+
+    var nytIndex = 0;
+    var nytTotalReadTime = 0;
+
 
     $.ajax({
         url: nytQueryURL,
         method: 'GET'
     }).then(function (input) {
 
+        function displayNYTArticles() {
+
         var nytResults = input.response.docs;
-        console.log(nytResults);
 
-        var nytHeadline = nytResults[0].headline.main;
+        var nytWordcount = nytResults[nytIndex].word_count;
+        console.log("nytWordcount: " + nytWordcount);
+
+        var nytReadTime = Math.round(nytWordcount/250);
+        console.log ("nytReadTime: " + nytReadTime);
+
+        // if (nytReadTime < 1) {
+        //     nytIndex++;
+        //     displayNYTArticles();
+        // }
+
+
+        var nytArticleText = $("<div>").attr("class", "nytSection");
+        
+        var nytHeadline = nytResults[nytIndex].headline.main;
+
         console.log(nytHeadline);
-        $("#headline1").text(nytHeadline);
 
-        var nytWordcount = nytResults[0].word_count;
-        console.log(nytWordcount);
+        var nytHeadlineText = $("<p>").text(nytHeadline);
+        
+        nytTotalReadTime += nytReadTime;
 
-        var nytReadTime = Math.round(nytWordcount/275);
-        console.log (nytReadTime);
-        $("#readTime1").text("Estimated read time: " + nytReadTime + " min");
+        var nytReadTimeText = 
+        $("<p>").text("Estimated read time: " + nytReadTime + " min");
 
+        nytArticleText.append(nytHeadlineText, nytReadTimeText);
+
+        $("#nyt").append(nytArticleText);
+
+        console.log("Total NYT read time =" + nytTotalReadTime)
+        console.log("NYT index: " + nytIndex);
+
+        if (nytTotalReadTime < 25) {
+            nytIndex++;
+            displayNYTArticles();
+        } else {
+            return;
+        }
+
+    }
+
+        displayNYTArticles();
+        $("#nyt").append("Total read time: " + nytTotalReadTime + "min");
 
     });
 
 
-    var guardQueryURL = "https://content.guardianapis.com/search?q=obama&show-fields=all&page-size=50&api-key=ee30fe53-cc69-4403-802d-998ba44e8fa7";
-    console.log(guardQueryURL);
+    var guardQueryURL = "https://content.guardianapis.com/search?q=trump&show-fields=all&page-size=50&api-key=ee30fe53-cc69-4403-802d-998ba44e8fa7";
 
-    var guardCount = 0;
+    var guardIndex = 0;
     var guardTotalReadTime = 0;
 
     $.ajax({
@@ -36,46 +73,54 @@
         method: 'GET'
     }).then(function (input) {
 
-        function displayArticles() {
+        function displayGuardArticles() {
         
         var guardResults = input.response.results;
-        console.log(guardResults);
 
-        var articleText = $("<div>").attr("class", "articleSection");
-        
-        var guardHeadline = guardResults[guardCount].webTitle;
-
-        console.log(guardHeadline);
-
-        var guardHeadlineText = $("<p>").text(guardResults[guardCount].webTitle);
-        
-        var guardWordcount = guardResults[guardCount].fields.wordcount;
-        
+        var guardWordcount = guardResults[guardIndex].fields.wordcount;
         console.log(guardWordcount);
 
         var guardReadTime = Math.round(guardWordcount/250);
         console.log (guardReadTime);
+        
+        // if (guardReadTime < 5) {
+        //     guardIndex++;
+        //     displayGuardArticles();
+        // }
 
+        var guardArticleText = $("<div>").attr("class", "guardSection");
+        
+        var guardHeadline = guardResults[guardIndex].webTitle;
+
+        console.log(guardHeadline);
+
+        var guardHeadlineText = $("<p>").text(guardHeadline);
+        
         guardTotalReadTime += guardReadTime;
 
         var guardReadTimeText = 
         $("<p>").text("Estimated read time: " + guardReadTime + " min");
 
-        articleText.append(guardHeadlineText, guardReadTimeText);
+        guardArticleText.append(guardHeadlineText, guardReadTimeText);
 
-        $("#guardian").append(articleText);
+        $("#guardian").append(guardArticleText);
 
-        guardCount++;
+        console.log("Total read time =" + guardTotalReadTime)
+        console.log("Guard index: " + guardIndex);
 
         if (guardTotalReadTime < 25) {
-            displayArticles();
+            guardIndex++;
+            displayGuardArticles();
+        } else {
+            return;
         }
+
 
         }
 
-        displayArticles();
-        console.log(guardCount);
-        console.log(guardTotalReadTime);
+        displayGuardArticles();
+        $("#guardian").append("Total read time: " + guardTotalReadTime + "min");
+
 
         });
 
