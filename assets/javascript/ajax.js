@@ -1,94 +1,108 @@
-    
-    //
-    
-    var nytQueryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=465a473b34ef4dd4a0ee8c44278471a2&q=obama";
 
-    var nytIndex = 0;
-    var nytTotalReadTime = 0;
+//
+
+var nytQueryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=465a473b34ef4dd4a0ee8c44278471a2&q=obama";
+
+var nytTotalReadTime = 0;
+
+function getNYTValues(results) {
+
+    var nytWordcount = results.word_count;
+
+    console.log("nytWordcount: " + nytWordcount);
+
+    var nytReadTime = Math.round(nytWordcount / 250);
+
+    console.log("nytReadTime: " + nytReadTime);
+
+    var nytHeadline = results.headline.main;
+    // console.log(nytHeadline);
+
+    var nytLink = results.web_url;
+
+    return {
+        wordCount: nytWordcount,
+        readTime: nytReadTime,
+        headline: nytHeadline,
+        link: nytLink,
+    }
+}
+
+function addArticletoPage(nyt) {
+
+    var nytArticleText = $("<div>").attr("class", "nytSection");
+
+    var nytHeadlineText = $("<p>").html("<a href='" + nyt.link + "'>" + nyt.headline + "</a>");
+
+    var nytReadTimeText =
+        $("<p>").text("Estimated read time: " + nyt.readTime + " min");
+
+    nytArticleText.append(nytHeadlineText, nytReadTimeText);
+
+    $("#nyt").append(nytArticleText);
+}
 
 
-    $.ajax({
-        url: nytQueryURL,
-        method: 'GET'
-    }).then(function (input) {
+function displayNYTArticles(input) {
 
-        function displayNYTArticles() {
+    var nytResults = input.response.docs;
 
-        var nytResults = input.response.docs;
+    for (i = 0; i < nytResults.length; i++) {
 
-        var nytWordcount = nytResults[nytIndex].word_count;
-        // console.log("nytWordcount: " + nytWordcount);
+        var nyt = getNYTValues(nytResults[i]);
 
-        var nytReadTime = Math.round(nytWordcount/250);
-        // console.log ("nytReadTime: " + nytReadTime);
+        console.log(nyt);
 
-        if (nytReadTime < 1 || nytReadTime > 10) {
-            nytIndex++;
-            displayNYTArticles();
-            return;
-        }
+        nytTotalReadTime += nyt.readTime;
 
-        var nytHeadline = nytResults[nytIndex].headline.main;
-        // console.log(nytHeadline);
+        if (nyt.readTime > 1 && nyt.readTime < 10 && nytTotalReadTime <= 25) {
 
-        var nytLink = nytResults[nytIndex].web_url;
+            addArticletoPage(nyt);
 
-        nytTotalReadTime += nytReadTime;
-        
-        if (nytTotalReadTime <= 25) {
-            nytIndex++;
-            displayNYTArticles();
         } else {
-            nytTotalReadTime -= nytReadTime
+            nytTotalReadTime -= nyt.readTime
             return;
         }
-
-        var nytArticleText = $("<div>").attr("class", "nytSection");
-
-        var nytHeadlineText = $("<p>").html("<a href='" + nytLink + "'>" + nytHeadline + "</a>");
-
-        var nytReadTimeText = 
-        $("<p>").text("Estimated read time: " + nytReadTime + " min");
-
-        nytArticleText.append(nytHeadlineText, nytReadTimeText);
-
-        $("#nyt").append(nytArticleText);
 
         // console.log("Total NYT read time =" + nytTotalReadTime)
         // console.log("NYT index: " + nytIndex);
-
-        
-
     }
 
-        displayNYTArticles();
-        $("#nyt").append("Total read time: " + nytTotalReadTime + "min");
+}
 
-    });
+$.ajax({
+    url: nytQueryURL,
+    method: 'GET'
+}).then(function (input) {
+
+    displayNYTArticles(input);
+    $("#nyt").append("Total read time: " + nytTotalReadTime + "min");
+
+});
 
 
-    var guardQueryURL = "https://content.guardianapis.com/search?q=trump&show-fields=all&page-size=50&api-key=ee30fe53-cc69-4403-802d-998ba44e8fa7";
+var guardQueryURL = "https://content.guardianapis.com/search?q=trump&show-fields=all&page-size=50&api-key=ee30fe53-cc69-4403-802d-998ba44e8fa7";
 
-    var guardIndex = 0;
-    var guardTotalReadTime = 0;
+var guardIndex = 0;
+var guardTotalReadTime = 0;
 
-    $.ajax({
-        url: guardQueryURL,
-        method: 'GET'
-    }).then(function (input) {
+$.ajax({
+    url: guardQueryURL,
+    method: 'GET'
+}).then(function (input) {
 
-        function displayGuardArticles() {
-        
+    function displayGuardArticles() {
+
         var guardResults = input.response.results;
 
         var guardWordcount = guardResults[guardIndex].fields.wordcount;
         // console.log(guardWordcount);
 
-        var guardReadTime = Math.round(guardWordcount/250);
+        var guardReadTime = Math.round(guardWordcount / 250);
         // console.log (guardReadTime);
-        
+
         if (guardReadTime < 5 || guardReadTime > 10) {
-            guardIndex++; 
+            guardIndex++;
             displayGuardArticles();
             return;
         }
@@ -114,8 +128,8 @@
 
         // console.log("headline + link =" + guardHeadlineText)
 
-        var guardReadTimeText = 
-        $("<p>").text("Estimated read time: " + guardReadTime + " min");
+        var guardReadTimeText =
+            $("<p>").text("Estimated read time: " + guardReadTime + " min");
 
         guardArticleText.append(guardHeadlineText, guardReadTimeText);
 
@@ -124,16 +138,16 @@
         // console.log("Total read time =" + guardTotalReadTime)
         // console.log("Guard index: " + guardIndex);
 
-        
 
 
-        }
 
-        displayGuardArticles();
-        $("#guardian").append("Total read time: " + guardTotalReadTime + "min");
+    }
+
+    displayGuardArticles();
+    $("#guardian").append("Total read time: " + guardTotalReadTime + "min");
 
 
-        });
+});
 
 
         // var guardPic = guardResults[0].fields.thumbnail
