@@ -71,7 +71,7 @@ $(document).ready(function () {
 });
 
 
-/*
+
     //Event listener to trigger the AJAX request
     $("body").on("click", ".topic-btn", function () {
         var choiceTopic = $(this).attr("data-topic");
@@ -142,7 +142,7 @@ $(document).ready(function () {
         });
     
     
-        var guardQueryURL = "https://content.guardianapis.com/search?q=" + choiceTopic + "&show-fields=all&page-size=50&api-key=ee30fe53-cc69-4403-802d-998ba44e8fa7";
+        var guardQueryURL = "https://content.guardianapis.com/search?q=" + choiceTopic + "&show-fields=all&page-size=200&api-key=ee30fe53-cc69-4403-802d-998ba44e8fa7";
     
         var guardIndex = 0;
         var guardTotalReadTime = 0;
@@ -206,6 +206,8 @@ $(document).ready(function () {
     
             });
 
+            console.log(nytQueryURL, guardQueryURL);
+
 
 
 
@@ -213,6 +215,6 @@ $(document).ready(function () {
 
     });
 
-*/
+
 
 
