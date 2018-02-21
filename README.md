@@ -1,26 +1,8 @@
 # pomodoro-project
 Pomodoro project
 
-
-Mangogit
-
-HELLO THIS IS A CHANGE
+A website that brings news articles together for a focused 25-minute read. 
 
 
 ##Collaboratorss
-Josh
-HI DIS IS ME
-
-##Collaboratorss
-Josh
-HI DIS IS ME 
-
-
-mango mango mango
-
-WHYYYYYYYY
-
-
-meow moewo moewoeo aoggoaiug erg
-test tet est 
-mango mango mango
+Josh Bay, Dulguun Mango Enkh, Li Victoria Tu
