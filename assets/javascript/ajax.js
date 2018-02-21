@@ -17,10 +17,10 @@
         var nytResults = input.response.docs;
 
         var nytWordcount = nytResults[nytIndex].word_count;
-        console.log("nytWordcount: " + nytWordcount);
+        // console.log("nytWordcount: " + nytWordcount);
 
         var nytReadTime = Math.round(nytWordcount/250);
-        console.log ("nytReadTime: " + nytReadTime);
+        // console.log ("nytReadTime: " + nytReadTime);
 
         if (nytReadTime < 1 || nytReadTime > 10) {
             nytIndex++;
@@ -29,7 +29,9 @@
         }
 
         var nytHeadline = nytResults[nytIndex].headline.main;
-        console.log(nytHeadline);
+        // console.log(nytHeadline);
+
+        var nytLink = nytResults[nytIndex].web_url;
 
         nytTotalReadTime += nytReadTime;
         
@@ -43,7 +45,7 @@
 
         var nytArticleText = $("<div>").attr("class", "nytSection");
 
-        var nytHeadlineText = $("<p>").text(nytHeadline);
+        var nytHeadlineText = $("<p>").html("<a href='" + nytLink + "'>" + nytHeadline + "</a>");
 
         var nytReadTimeText = 
         $("<p>").text("Estimated read time: " + nytReadTime + " min");
@@ -52,8 +54,8 @@
 
         $("#nyt").append(nytArticleText);
 
-        console.log("Total NYT read time =" + nytTotalReadTime)
-        console.log("NYT index: " + nytIndex);
+        // console.log("Total NYT read time =" + nytTotalReadTime)
+        // console.log("NYT index: " + nytIndex);
 
         
 
@@ -80,10 +82,10 @@
         var guardResults = input.response.results;
 
         var guardWordcount = guardResults[guardIndex].fields.wordcount;
-        console.log(guardWordcount);
+        // console.log(guardWordcount);
 
         var guardReadTime = Math.round(guardWordcount/250);
-        console.log (guardReadTime);
+        // console.log (guardReadTime);
         
         if (guardReadTime < 5 || guardReadTime > 10) {
             guardIndex++; 
@@ -92,7 +94,7 @@
         }
 
         var guardHeadline = guardResults[guardIndex].webTitle;
-        console.log(guardHeadline);
+        // console.log(guardHeadline);
 
         var guardLink = guardResults[guardIndex].webUrl;
 
@@ -108,9 +110,9 @@
 
         var guardArticleText = $("<div>").attr("class", "guardSection");
 
-        var guardHeadlineText = $("<p>").html("<a href='" + guardLink + ">" + guardHeadline + "</a>");
+        var guardHeadlineText = $("<p>").html("<a href='" + guardLink + "'>" + guardHeadline + "</a>");
 
-        console.log(guardHeadlineText)
+        // console.log("headline + link =" + guardHeadlineText)
 
         var guardReadTimeText = 
         $("<p>").text("Estimated read time: " + guardReadTime + " min");
@@ -119,8 +121,8 @@
 
         $("#guardian").append(guardArticleText);
 
-        console.log("Total read time =" + guardTotalReadTime)
-        console.log("Guard index: " + guardIndex);
+        // console.log("Total read time =" + guardTotalReadTime)
+        // console.log("Guard index: " + guardIndex);
 
         
 
