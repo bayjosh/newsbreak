@@ -22,21 +22,28 @@
         var nytReadTime = Math.round(nytWordcount/250);
         console.log ("nytReadTime: " + nytReadTime);
 
-        // if (nytReadTime < 1) {
-        //     nytIndex++;
-        //     displayNYTArticles();
-        // }
+        if (nytReadTime < 1) {
+            nytIndex++;
+            displayNYTArticles();
+            return;
+        }
 
-
-        var nytArticleText = $("<div>").attr("class", "nytSection");
-        
         var nytHeadline = nytResults[nytIndex].headline.main;
-
         console.log(nytHeadline);
 
-        var nytHeadlineText = $("<p>").text(nytHeadline);
-        
         nytTotalReadTime += nytReadTime;
+        
+        if (nytTotalReadTime <= 25) {
+            nytIndex++;
+            displayNYTArticles();
+        } else {
+            nytTotalReadTime -= nytReadTime
+            return;
+        }
+
+        var nytArticleText = $("<div>").attr("class", "nytSection");
+
+        var nytHeadlineText = $("<p>").text(nytHeadline);
 
         var nytReadTimeText = 
         $("<p>").text("Estimated read time: " + nytReadTime + " min");
@@ -48,12 +55,7 @@
         console.log("Total NYT read time =" + nytTotalReadTime)
         console.log("NYT index: " + nytIndex);
 
-        if (nytTotalReadTime < 25) {
-            nytIndex++;
-            displayNYTArticles();
-        } else {
-            return;
-        }
+        
 
     }
 
@@ -83,20 +85,28 @@
         var guardReadTime = Math.round(guardWordcount/250);
         console.log (guardReadTime);
         
-        // if (guardReadTime < 5) {
-        //     guardIndex++;
-        //     displayGuardArticles();
-        // }
+        if (guardReadTime < 5) {
+            guardIndex++;
+            displayGuardArticles();
+            return;
+        }
 
-        var guardArticleText = $("<div>").attr("class", "guardSection");
-        
         var guardHeadline = guardResults[guardIndex].webTitle;
-
         console.log(guardHeadline);
 
-        var guardHeadlineText = $("<p>").text(guardHeadline);
-        
         guardTotalReadTime += guardReadTime;
+
+        if (guardTotalReadTime <= 25) {
+            guardIndex++;
+            displayGuardArticles();
+        } else {
+            guardTotalReadTime -= guardReadTime
+            return;
+        }
+
+        var guardArticleText = $("<div>").attr("class", "guardSection");
+
+        var guardHeadlineText = $("<p>").text(guardHeadline);
 
         var guardReadTimeText = 
         $("<p>").text("Estimated read time: " + guardReadTime + " min");
@@ -108,12 +118,7 @@
         console.log("Total read time =" + guardTotalReadTime)
         console.log("Guard index: " + guardIndex);
 
-        if (guardTotalReadTime < 25) {
-            guardIndex++;
-            displayGuardArticles();
-        } else {
-            return;
-        }
+        
 
 
         }
