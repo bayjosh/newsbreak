@@ -22,7 +22,7 @@
         var nytReadTime = Math.round(nytWordcount/250);
         console.log ("nytReadTime: " + nytReadTime);
 
-        if (nytReadTime < 1) {
+        if (nytReadTime < 1 || nytReadTime > 10) {
             nytIndex++;
             displayNYTArticles();
             return;
@@ -85,14 +85,16 @@
         var guardReadTime = Math.round(guardWordcount/250);
         console.log (guardReadTime);
         
-        if (guardReadTime < 5) {
-            guardIndex++;
+        if (guardReadTime < 5 || guardReadTime > 10) {
+            guardIndex++; 
             displayGuardArticles();
             return;
         }
 
         var guardHeadline = guardResults[guardIndex].webTitle;
         console.log(guardHeadline);
+
+        var guardLink = guardResults[guardIndex].webUrl;
 
         guardTotalReadTime += guardReadTime;
 
@@ -106,7 +108,9 @@
 
         var guardArticleText = $("<div>").attr("class", "guardSection");
 
-        var guardHeadlineText = $("<p>").text(guardHeadline);
+        var guardHeadlineText = $("<p>").html("<a href='" + guardLink + ">" + guardHeadline + "</a>");
+
+        console.log(guardHeadlineText)
 
         var guardReadTimeText = 
         $("<p>").text("Estimated read time: " + guardReadTime + " min");
