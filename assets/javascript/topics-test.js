@@ -72,149 +72,178 @@ $(document).ready(function () {
 
 
 
-    //Event listener to trigger the AJAX request
-    $("body").on("click", ".topic-btn", function () {
-        var choiceTopic = $(this).attr("data-topic");
-        
-        var nytQueryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=465a473b34ef4dd4a0ee8c44278471a2&q=" + choiceTopic;
+//Event listener to trigger the AJAX request
+$("body").on("click", ".topic-btn", function () {
 
-        var nytIndex = 0;
-        var nytTotalReadTime = 0;
+    var choiceTopic = $(this).attr("data-topic");
+
+    var nytQueryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=465a473b34ef4dd4a0ee8c44278471a2&q=" + choiceTopic;
+
+    var nytTotalReadTime = 0;
+
+    var guardQueryURL = "https://content.guardianapis.com/search?q=" + choiceTopic + "&show-fields=all&page-size=200&api-key=ee30fe53-cc69-4403-802d-998ba44e8fa7";
+
+    var guardTotalReadTime = 0;
+
+    $("#nyt").empty();
+    $("#guardian").empty();
+
     
-    
-        $.ajax({
-            url: nytQueryURL,
-            method: 'GET'
-        }).then(function (input) {
-    
-            function displayNYTArticles() {
-    
-            var nytResults = input.response.docs;
-    
-            var nytWordcount = nytResults[nytIndex].word_count;
-            // console.log("nytWordcount: " + nytWordcount);
-    
-            var nytReadTime = Math.round(nytWordcount/250);
-            // console.log ("nytReadTime: " + nytReadTime);
-    
-            if (nytReadTime < 1 || nytReadTime > 10) {
-                nytIndex++;
-                displayNYTArticles();
-                return;
-            }
-    
-            var nytHeadline = nytResults[nytIndex].headline.main;
-            // console.log(nytHeadline);
-    
-            var nytLink = nytResults[nytIndex].web_url;
-    
-            nytTotalReadTime += nytReadTime;
-            
-            if (nytTotalReadTime <= 25) {
-                nytIndex++;
-                displayNYTArticles();
+
+    function getNYTData(results) {
+
+        var nytWordcount = results.word_count;
+
+        // console.log("nytWordcount: " + nytWordcount);
+
+        var nytReadTime = Math.round(nytWordcount / 250);
+
+        // console.log("nytReadTime: " + nytReadTime);
+
+        var nytHeadline = results.headline.main;
+        // console.log(nytHeadline);
+
+        var nytLink = results.web_url;
+
+        return {
+            wordCount: nytWordcount,
+            readTime: nytReadTime,
+            headline: nytHeadline,
+            link: nytLink,
+        }
+    }
+
+    function addNYTArticles(nyt) {
+
+        var nytArticleText = $("<div>").attr("class", "nytSection");
+
+        var nytHeadlineText = $("<p>").html("<a href='" + nyt.link + "' target='_blank'>" + nyt.headline + "</a>");
+
+        var nytReadTimeText =
+            $("<p>").text("Estimated read time: " + nyt.readTime + " min");
+
+        nytArticleText.append(nytHeadlineText, nytReadTimeText);
+
+        $("#nyt").append(nytArticleText);
+    }
+
+
+    function displayNYTArticles(input) {
+
+        var nytResults = input.response.docs;
+
+        for (var i = 0; i < nytResults.length; i++) {
+
+            var nyt = getNYTData(nytResults[i]);
+
+            console.log(nyt);
+
+            nytTotalReadTime += nyt.readTime;
+
+            if (nyt.readTime > 1 && nyt.readTime < 10 && nytTotalReadTime <= 25) {
+
+                addNYTArticles(nyt);
+
             } else {
-                nytTotalReadTime -= nytReadTime
-                return;
+                nytTotalReadTime -= nyt.readTime
             }
-    
-            var nytArticleText = $("<div>").attr("class", "nytSection");
-    
-            var nytHeadlineText = $("<p>").html("<a href='" + nytLink + "'>" + nytHeadline + "</a>");
-    
-            var nytReadTimeText = 
-            $("<p>").text("Estimated read time: " + nytReadTime + " min");
-    
-            nytArticleText.append(nytHeadlineText, nytReadTimeText);
-    
-            $("#nyt").append(nytArticleText);
-    
+
             // console.log("Total NYT read time =" + nytTotalReadTime)
             // console.log("NYT index: " + nytIndex);
-    
-            
-    
         }
-    
-            displayNYTArticles();
-            $("#nyt").append("Total read time: " + nytTotalReadTime + "min");
-    
-        });
-    
-    
-        var guardQueryURL = "https://content.guardianapis.com/search?q=" + choiceTopic + "&show-fields=all&page-size=200&api-key=ee30fe53-cc69-4403-802d-998ba44e8fa7";
-    
-        var guardIndex = 0;
-        var guardTotalReadTime = 0;
-    
-        $.ajax({
-            url: guardQueryURL,
-            method: 'GET'
-        }).then(function (input) {
-    
-            function displayGuardArticles() {
-            
-            var guardResults = input.response.results;
-    
-            var guardWordcount = guardResults[guardIndex].fields.wordcount;
-            // console.log(guardWordcount);
-    
-            var guardReadTime = Math.round(guardWordcount/250);
-            // console.log (guardReadTime);
-            
-            if (guardReadTime < 5 || guardReadTime > 10) {
-                guardIndex++; 
-                displayGuardArticles();
-                return;
-            }
-    
-            var guardHeadline = guardResults[guardIndex].webTitle;
-            // console.log(guardHeadline);
-    
-            var guardLink = guardResults[guardIndex].webUrl;
-    
-            guardTotalReadTime += guardReadTime;
-    
-            if (guardTotalReadTime <= 25) {
-                guardIndex++;
-                displayGuardArticles();
-            } else {
-                guardTotalReadTime -= guardReadTime
-                return;
-            }
-    
-            var guardArticleText = $("<div>").attr("class", "guardSection");
-    
-            var guardHeadlineText = $("<p>").html("<a href='" + guardLink + "'>" + guardHeadline + "</a>");
-    
-            // console.log("headline + link =" + guardHeadlineText)
-    
-            var guardReadTimeText = 
-            $("<p>").text("Estimated read time: " + guardReadTime + " min");
-    
-            guardArticleText.append(guardHeadlineText, guardReadTimeText);
-    
-            $("#guardian").append(guardArticleText);
-    
-            // console.log("Total read time =" + guardTotalReadTime)
-            // console.log("Guard index: " + guardIndex);
-            }
-    
-            displayGuardArticles();
-            $("#guardian").append("Total read time: " + guardTotalReadTime + "min");
-    
-    
-            });
 
-            console.log(nytQueryURL, guardQueryURL);
+    }
 
+    $.ajax({
+        url: nytQueryURL,
+        method: 'GET'
+    }).then(function (input) {
 
-
-
-
+        displayNYTArticles(input);
+        $("#nyt").append("Total read time: " + nytTotalReadTime + "min");
 
     });
 
 
 
+function getGuardData(results) {
 
+    var guardWordcount = results.fields.wordcount;
+    console.log(guardWordcount);
+
+    var guardReadTime = Math.round(guardWordcount / 250);
+    // console.log (guardReadTime);
+
+    var guardHeadline = results.webTitle;
+    // console.log(guardHeadline);
+
+    var guardLink = results.webUrl;
+
+    return {
+        wordCount: guardWordcount,
+        readTime: guardReadTime,
+        headline: guardHeadline,
+        link: guardLink,
+    }
+
+}
+
+function addGuardArticles(guard) {
+
+    var guardArticleText = $("<div>").attr("class", "guardSection");
+
+    var guardHeadlineText = $("<p>").html("<a href='" + guard.link + "' target='_blank'>" + guard.headline + "</a>");
+
+    // console.log("headline + link =" + guardHeadlineText)
+
+    var guardReadTimeText =
+        $("<p>").text("Estimated read time: " + guard.readTime + " min");
+
+    guardArticleText.append(guardHeadlineText, guardReadTimeText);
+
+    $("#guardian").append(guardArticleText);
+
+    // console.log("Total read time =" + guardTotalReadTime)
+    // console.log("Guard index: " + guardIndex);
+
+}
+
+function displayGuardArticles(input) {
+
+    var guardResults = input.response.results;
+
+    for (var i = 0; i < guardResults.length; i++) {
+
+        var guard = getGuardData(guardResults[i]);
+
+        console.log(guardResults[i]);
+
+        console.log(guard.readTime);
+
+        console.log(guard);
+
+        guardTotalReadTime += guard.readTime;
+
+        if (guard.readTime > 5 && guard.readTime < 10 && guardTotalReadTime <= 25) {
+
+            addGuardArticles(guard);
+
+        } else {
+            guardTotalReadTime -= guard.readTime;
+        }
+
+    }
+
+};
+
+$.ajax({
+    url: guardQueryURL,
+    method: 'GET'
+}).then(function (input) {
+
+    displayGuardArticles(input);
+    $("#guardian").append("Total read time: " + guardTotalReadTime + "min");
+
+});
+
+});
