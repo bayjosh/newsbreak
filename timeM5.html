@@ -5,11 +5,12 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>timeM5</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
             crossorigin="anonymous">
-        <script src="main.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </head>
 
     <body>
@@ -30,6 +31,27 @@
                 </div>
             </div>
         </div>
+        
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyBa5ABniwGgmVdCEnijfdABEEk7cGLuzXk",
+                authDomain: "pomodoro-project-1dd76.firebaseapp.com",
+                databaseURL: "https://pomodoro-project-1dd76.firebaseio.com",
+                projectId: "pomodoro-project-1dd76",
+                storageBucket: "",
+                messagingSenderId: "702315489756"
+            };
+            firebase.initializeApp(config);
+            var database = firebase.database();
+            var clickCounter = 0;
+            $(".btn").on("click", function () {
+                clickCounter++;
+                database.ref().set({
+                    clickCount: clickCounter
+                });
+            });
+        </script>
     </body>
 
     </html>
