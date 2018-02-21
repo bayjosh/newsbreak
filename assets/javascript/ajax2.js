@@ -1,7 +1,14 @@
     
     //
     
-    var searchTerm = 
+    var topics = ["obama","trump","hilary","florida"];
+
+        
+
+
+
+
+    // // // // // // // ///
 
     var nytQueryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=465a473b34ef4dd4a0ee8c44278471a2&q=" + searchTerm;
 
