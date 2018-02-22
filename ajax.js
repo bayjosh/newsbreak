@@ -53,7 +53,7 @@ $(document).ready(function () {
 
             var btn = $("<button>");
 
-            // btn.addClass("btn-large");
+            btn.addClass("topic-btn btn btn-success");
 
             btn.attr("data-topic", topic[i]);
 
