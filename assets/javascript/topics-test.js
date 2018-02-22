@@ -7,7 +7,7 @@ $(document).ready(function () {
 
     //Event listener that pushes user input into array and creates an associated button
 
-    $("body").on("click", "#add-topic", function (event) {
+    $(document).on("click", "#add-topic", function (event) {
         event.preventDefault();
 
         var topicInput = $("#topic-input").val().trim();
