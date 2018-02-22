@@ -9,8 +9,9 @@
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
             crossorigin="anonymous">
-            <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
     </head>
 
     <body>
@@ -19,6 +20,7 @@
                 <!-- ROW1 -->
                 <div class="row">
                     <h1>Remaining Time</h1>
+                    <div id="display">00:00</div>
                 </div>
             </div>
         </div>
@@ -31,8 +33,9 @@
                 </div>
             </div>
         </div>
-        
+
         <script>
+
             // Initialize Firebase
             var config = {
                 apiKey: "AIzaSyBa5ABniwGgmVdCEnijfdABEEk7cGLuzXk",
@@ -51,6 +54,66 @@
                     clickCount: clickCounter
                 });
             });
+            function count() {
+
+                    
+                    stopwatch.time++;
+
+                   
+                    var converted = stopwatch.timeConverter(stopwatch.time);
+                    console.log(converted);
+
+                   
+                    $("#display").text(converted);
+                }
+               function timeConverter(t) {
+
+                    var minutes = Math.floor(t / 60);
+                    var seconds = t - (minutes * 60);
+
+                    if (seconds < 10) {
+                        seconds = "0" + seconds;
+                    }
+
+                    if (minutes === 0) {
+                        minutes = "00";
+                    }
+                    else if (minutes < 10) {
+                        minutes = "0" + minutes;
+                    }
+
+                    return minutes + ":" + seconds;
+                }
+        
+        
+
+            // var number = 100;
+
+            // var intervalId;
+            // var moment = "";
+            // moment(number).format(mmss, "X");
+
+            // $("#stop").on("click", stop);
+
+            // $("#resume").on("click", run);
+
+            // function run() {
+            //     clearInterval(intervalId);
+            //     intervalId = setInterval(decrement, 1000);
+            // }
+            // function decrement() {
+            //     number--;
+            //     $("#show-timer").html("<h2>" + number + "</h2>");
+            //     if (number === 0) {
+            //         stop();
+            //     }
+            // }
+
+            // function stop() {
+
+            //     clearInterval(intervalId);
+            // }
+            // run();
         </script>
     </body>
 
