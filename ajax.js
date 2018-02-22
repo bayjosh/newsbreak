@@ -268,7 +268,7 @@ $.ajax({
     displayGuardArticles(input);
     $("#guardian").append("Total read time: " + guardTotalReadTime + "min");
 
-    var button = document.createElement("button");
+        var button = document.createElement("button");
     button.innerHTML = "Need a break?";
 
     var body = document.getElementsByTagName("body")[0];
