@@ -53,7 +53,7 @@ $(document).ready(function () {
 
             var btn = $("<button>");
 
-            btn.addClass("topic-btn btn btn-success");
+            btn.addClass("topic-btn waves-effect waves-light btn-large");
 
             btn.attr("data-topic", topic[i]);
 
@@ -84,9 +84,14 @@ $("body").on("click", ".topic-btn", function () {
     var guardQueryURL = "https://content.guardianapis.com/search?q=" + choiceTopic + "&show-fields=all&page-size=200&api-key=ee30fe53-cc69-4403-802d-998ba44e8fa7";
 
     var guardTotalReadTime = 0;
-
+//  this is to have the need a break button at the bottom //
+  
     $("#nyt").empty();
     $("#guardian").empty();
+
+
+
+
 
     
 
@@ -125,6 +130,14 @@ $("body").on("click", ".topic-btn", function () {
         nytArticleText.append(nytHeadlineText, nytReadTimeText);
 
         $("#nyt").append(nytArticleText);
+        
+        
+        // // // 
+
+        
+        // // // 
+
+
     }
 
 
@@ -159,6 +172,8 @@ $("body").on("click", ".topic-btn", function () {
         method: 'GET'
     }).then(function (input) {
 
+        var nytHeader = $('<h4 class="teal lighten-2">').text("The New York Times Articles")
+        $("#nyt").prepend(nytHeader);
         displayNYTArticles(input);
         $("#nyt").append("Total read time: " + nytTotalReadTime + "min");
 
@@ -192,6 +207,10 @@ function addGuardArticles(guard) {
 
     var guardArticleText = $("<div>").attr("class", "guardSection");
 
+    // // //
+
+
+
     var guardHeadlineText = $("<p>").html("<a href='" + guard.link + "' target='_blank'>" + guard.headline + "</a>");
 
     // console.log("headline + link =" + guardHeadlineText)
@@ -205,6 +224,9 @@ function addGuardArticles(guard) {
 
     // console.log("Total read time =" + guardTotalReadTime)
     // console.log("Guard index: " + guardIndex);
+
+               
+
 
 }
 
@@ -241,8 +263,21 @@ $.ajax({
     method: 'GET'
 }).then(function (input) {
 
+    var guardHeader = $('<h4 class="teal lighten-2">').text("The Guardian's Articles")
+    $("#guardian").prepend(guardHeader);
     displayGuardArticles(input);
     $("#guardian").append("Total read time: " + guardTotalReadTime + "min");
+
+    var button = document.createElement("button");
+    button.innerHTML = "Need a break?";
+
+    var body = document.getElementsByTagName("body")[0];
+    body.appendChild(button);
+
+    button.addEventListener ("click", function() {
+     
+            window.location='break.html';
+    });
 
 });
 
