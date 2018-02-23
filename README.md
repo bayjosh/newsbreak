@@ -1,30 +1,27 @@
-# pomodoro-project
-Pomodoro project
+#Project Name
+NewsBreak!
 
-A website that brings news articles together for a focused 25-minute read. 
+The news you want...in the time you have. 
 
+
+#Brief description
+NewsBreak provides curated articles on specific topics based on user choice within the time window that the user has. 
+
+#Screenshot of homepage
+
+#Gif of User Flow
+
+#Technologies Used
+- HTML
+- Javascript/jQuery
+- Materialize
+- Firebase
+- AJAX
+- NYTimes API 
+- The Guardian API
 
 ##Collaboratorss
-Josh Bay, Dulguun Mango Enkh, Li Victoria Tu
+Josh Bay, Dulguun Enkh, Victoria Tu
 
-##FIREBASE
 
- <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
- <script>            var config = {
-                apiKey: "AIzaSyBa5ABniwGgmVdCEnijfdABEEk7cGLuzXk",
-                authDomain: "pomodoro-project-1dd76.firebaseapp.com",
-                databaseURL: "https://pomodoro-project-1dd76.firebaseio.com",
-                projectId: "pomodoro-project-1dd76",
-                storageBucket: "",
-                messagingSenderId: "702315489756"
-            };
-            firebase.initializeApp(config);
-            var database = firebase.database();
-            var clickCounter = 0;
-            $(".addClassHere").on("click", function () {
-                clickCounter++;
-                database.ref().set({
-                    clickCount: clickCounter
-                });
-            });
-  </script>
+
