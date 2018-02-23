@@ -1,9 +1,7 @@
-//Create initial array of sports
-var topic = ["Obama", "Trump", "Olympics"];
-
 
 $(document).ready(function () {
-
+    var topics = ["Obama", "Trump", "Olympics"];
+ 
     // Firebase connect
     var config = {
         apiKey: "AIzaSyBa5ABniwGgmVdCEnijfdABEEk7cGLuzXk",
@@ -15,15 +13,8 @@ $(document).ready(function () {
     };
     firebase.initializeApp(config);
     var database = firebase.database();
-    // var clickCounter = 0;
 
-    $("#add-topic").on("click", function () {
-        var topicInput = $("#topic-input").val().trim();
-        // clickCounter++;
-        database.ref().set({
-            topic: topicInput
-        });
-    });
+
 
     database.ref().on("value", function (snapshot) {
         console.log(snapshot.val());
@@ -32,21 +23,27 @@ $(document).ready(function () {
 
         // clickCounter = snapshot.val().topicInput;
 
-    }, function (errorObject) {
-
+    }, function (error) {
+        console.log(error);
     });
    
 
+
     //Event listener that pushes user input into array and creates an associated button
 
-    $("body").on("click", "#add-topic", function (event) {
+    $("#add-topic").on("click", function (event) {
         event.preventDefault();
-
+        console.log("mango")
         var topicInput = $("#topic-input").val().trim();
 
         if (topicInput != "") {
 
-            topic.push(topicInput);
+            topics.push(topicInput);
+
+            // add to db 
+            database.ref().set({
+                topics: topics
+            });
 
             $("#topic-input").val("");
 
@@ -75,22 +72,24 @@ $(document).ready(function () {
         }
 
     });
-});
+
 
 //Puts buttons on the page from the array of sports
+console.log(topics)
 function renderButtons() {
+
 
     $("#buttons-view").empty();
 
-    for (var i = 0; i < topic.length; i++) {
+    for (var i = 0; i < topics.length; i++) {
 
         var btn = $("<button>");
 
         btn.addClass("topic-btn btn btn-success");
 
-        btn.attr("data-topic", topic[i]);
+        btn.attr("data-topic", topics[i]);
 
-        btn.text(topic[i]);
+        btn.text(topics[i]);
 
         $("#buttons-view").append(btn);
     };
@@ -98,6 +97,14 @@ function renderButtons() {
 
 //Calls the function
 renderButtons();
+
+database.ref().on("value", function(snapshot){
+    console.log(snapshot.val().topics);
+    // getting snapshot result pulling info from Database then showing it when refresh the page.
+    topics = snapshot.val().topics;
+    renderButtons();
+
+})
 
 
 
@@ -279,4 +286,5 @@ $("body").on("click", ".topic-btn", function () {
 
     });
 
+});
 });
