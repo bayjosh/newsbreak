@@ -1,5 +1,5 @@
 //Create initial array of topics
-var topic = ["Obama", "Trump", "Olympics"];
+var topic = ["Barack Obama", "Donald Trump", "Winter Olympics"];
 
 
 $(document).ready(function () {
