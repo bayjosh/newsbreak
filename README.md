@@ -1,10 +1,10 @@
-#Project Name
-NewsBreak!
+#Project Name  
+NewsBreak!  
 
 The news you want...in the time you have. 
 
 
-#Brief description
+#Brief description  
 NewsBreak provides curated articles on specific topics based on user choice within the time window that the user has. 
 
 #Screenshot of homepage
@@ -20,7 +20,7 @@ NewsBreak provides curated articles on specific topics based on user choice with
 - NYTimes API 
 - The Guardian API
 
-##Collaboratorss
+##Collaborators
 Josh Bay, Dulguun Enkh, Victoria Tu
 
 
