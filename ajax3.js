@@ -153,7 +153,7 @@ $("body").on("click", ".topic-btn", function () {
 
             nytTotalReadTime += nyt.readTime;
 
-            if (nyt.readTime > 1 && nyt.readTime < 10 && nytTotalReadTime <= 10) {
+            if (nyt.readTime > 1 && nyt.readTime < 10 && nytTotalReadTime <= 30) {
 
                 addNYTArticles(nyt);
 
@@ -246,7 +246,7 @@ function displayGuardArticles(input) {
 
         guardTotalReadTime += guard.readTime;
 
-        if (guard.readTime > 5 && guard.readTime < 10 && guardTotalReadTime <= 10) {
+        if (guard.readTime > 5 && guard.readTime < 10 && guardTotalReadTime <= 30) {
 
             addGuardArticles(guard);
 

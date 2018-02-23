@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Topics</title>
+
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu+Condensed" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" href="topics-test.css"> -->
+  <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="override.css">
+
+    <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+    <center>
+        <div class="container">
+
+            <h3 id="title">Suggested Topics</h3>
+
+            <br>
+
+            <div id="buttons-view"></div>
+
+            <br>
+
+
+
+            <form id="topic-form">
+                <label for="topic-input">Add a Topic!</label>
+                <input type="text" id="topic-input">
+                <input id="add-topic" type="submit" value="Add a Topic">
+            </form>
+
+            <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p>Please enter a topic you're interested in reading!</p>
+                </div>
+
+
+            </div>
+
+            <br>
+            <div>
+                <!-- <h4>The New York Times</h4> -->
+                <div id="nyt"></div>
+
+
+                <!-- <h4>The Guardian</h4> -->
+                <div id="guardian"></div>
+
+                <!-- <a href="break.html" class="waves-effect waves-light btn-large">Done Reading?</a> -->
+
+
+
+            </div>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+
+
+            <script type="text/javascript"></script>
+            <script src="ajax3.js"></script>
+
+
+            <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+            <!-- <script src="topics-test-mango.js"></script> -->
+            <!-- <script type="text/javascript"></script> -->
+
+    </center>
+</body>
+
+</html>
