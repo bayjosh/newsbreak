@@ -1,0 +1,103 @@
+<html>
+        <head>
+          <!--Import Google Icon Font-->
+          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+          <!--Import materialize.css-->
+          <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+          <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    
+          <!--Let browser know website is optimized for mobile-->
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        </head>
+    
+        <body class="grey lighten-5">
+
+            <!-- BEGINNING OF THE CODE -->
+        
+            <!-- HEADER -->
+            <p class="flow-text"></p>
+            <p class="flow-text"></p>
+            <h4 class="header center  ">5 - Minute Break</h4>
+                
+                <!-- timer -->
+
+                        <p class="flow-text">
+                            <p class="flow-text"></p>
+                            <p class="flow-text"></p>
+                        <center>
+                          <h1 class="card-panel teal lighten-2"> <span id="time">05:00</span></div>
+
+
+                          </h1>
+                        </center>    
+                        </p>
+
+                
+                <!--              BUTTON TO BEGIN -->
+           
+                <center>
+            <a href="timeselect.html" id="download-button" class="btn-large waves-effect waves-light">back to time select</a> </center>
+
+          <!--Import jQuery before materialize.js-->
+
+          <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+          <script type="text/javascript">
+            
+            function startTimer(duration, display) {
+                var timer = duration, minutes, seconds;
+                setInterval(function () {
+                    minutes = parseInt(timer / 60, 10)
+                    seconds = parseInt(timer % 60, 10);
+
+                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                    display.textContent = minutes + ":" + seconds;
+
+                    if (--timer < 0) {
+                        timer = duration;
+                    }
+                }, 1000);
+            }
+
+            window.onload = function () {
+                var fiveMinutes = 60 * 5,
+                    display = document.querySelector('#time');
+                startTimer(fiveMinutes, display);
+            };
+                        // function count() {
+
+                                            
+                        // stopwatch.time++;
+
+
+                        // var converted = stopwatch.timeConverter(stopwatch.time);
+                        // console.log(converted);
+
+
+                        // $("#display").text(converted);
+                        // }
+                        // function timeConverter(t) {
+
+                        // var minutes = Math.floor(t / 60);
+                        // var seconds = t - (minutes * 60);
+
+                        // if (seconds < 10) {
+                        //     seconds = "0" + seconds;
+                        // }
+
+                        // if (minutes === 0) {
+                        //     minutes = "00";
+                        // }
+                        // else if (minutes < 10) {
+                        //     minutes = "0" + minutes;
+                        // }
+
+                        // return minutes + ":" + seconds;
+                        // }
+
+
+          </script>
+
+        </body>
+      </html>
