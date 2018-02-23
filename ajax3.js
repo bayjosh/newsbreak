@@ -1,4 +1,4 @@
-//Create initial array of sports
+//Create initial array of topics
 var topic = ["Obama", "Trump", "Olympics"];
 
 
@@ -44,7 +44,7 @@ $(document).ready(function () {
 
     });
 
-    //Puts buttons on the page from the array of sports
+    //Puts buttons on the page from the array of topics
     function renderButtons() {
 
         $("#buttons-view").empty();
@@ -90,23 +90,13 @@ $("body").on("click", ".topic-btn", function () {
     $("#guardian").empty();
 
 
-
-
-
-    
-
     function getNYTData(results) {
 
         var nytWordcount = results.word_count;
 
-        // console.log("nytWordcount: " + nytWordcount);
-
         var nytReadTime = Math.round(nytWordcount / 250);
 
-        // console.log("nytReadTime: " + nytReadTime);
-
         var nytHeadline = results.headline.main;
-        // console.log(nytHeadline);
 
         var nytLink = results.web_url;
 
@@ -130,12 +120,6 @@ $("body").on("click", ".topic-btn", function () {
         nytArticleText.append(nytHeadlineText, nytReadTimeText);
 
         $("#nyt").append(nytArticleText);
-        
-        
-        // // // 
-
-        
-        // // // 
 
 
     }
@@ -149,8 +133,6 @@ $("body").on("click", ".topic-btn", function () {
 
             var nyt = getNYTData(nytResults[i]);
 
-            console.log(nyt);
-
             nytTotalReadTime += nyt.readTime;
 
             if (nyt.readTime > 1 && nyt.readTime < 10 && nytTotalReadTime <= 30) {
@@ -161,8 +143,6 @@ $("body").on("click", ".topic-btn", function () {
                 nytTotalReadTime -= nyt.readTime
             }
 
-            // console.log("Total NYT read time =" + nytTotalReadTime)
-            // console.log("NYT index: " + nytIndex);
         }
 
     }
@@ -184,13 +164,10 @@ $("body").on("click", ".topic-btn", function () {
 function getGuardData(results) {
 
     var guardWordcount = results.fields.wordcount;
-    console.log(guardWordcount);
 
-    var guardReadTime = Math.round(guardWordcount / 250);
-    // console.log (guardReadTime);
+    var guardReadTime = Math.round(guardWordcount / 275);
 
     var guardHeadline = results.webTitle;
-    // console.log(guardHeadline);
 
     var guardLink = results.webUrl;
 
@@ -207,13 +184,9 @@ function addGuardArticles(guard) {
 
     var guardArticleText = $("<div>").attr("class", "guardSection");
 
-    // // //
-
 
 
     var guardHeadlineText = $("<p>").html("<a href='" + guard.link + "' target='_blank'>" + guard.headline + "</a>");
-
-    // console.log("headline + link =" + guardHeadlineText)
 
     var guardReadTimeText =
         $("<p>").text("Estimated read time: " + guard.readTime + " min");
@@ -221,9 +194,6 @@ function addGuardArticles(guard) {
     guardArticleText.append(guardHeadlineText, guardReadTimeText);
 
     $("#guardian").append(guardArticleText);
-
-    // console.log("Total read time =" + guardTotalReadTime)
-    // console.log("Guard index: " + guardIndex);
 
                
 
@@ -237,12 +207,6 @@ function displayGuardArticles(input) {
     for (var i = 0; i < guardResults.length; i++) {
 
         var guard = getGuardData(guardResults[i]);
-
-        console.log(guardResults[i]);
-
-        console.log(guard.readTime);
-
-        console.log(guard);
 
         guardTotalReadTime += guard.readTime;
 

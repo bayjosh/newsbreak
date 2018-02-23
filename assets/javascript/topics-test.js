@@ -1,4 +1,4 @@
-//Create initial array of sports
+//Create initial array of topics
 var topic = ["Obama", "Trump", "Olympics"];
 
 
